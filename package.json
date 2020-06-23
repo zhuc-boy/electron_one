@@ -1,0 +1,22 @@
+{
+    "name": "electron_one",
+    "version": "1.0.0",
+    "description": "第一个electron程序",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/zhuc-boy/electron_one.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/zhuc-boy/electron_one/issues"
+    },
+    "homepage": "https://github.com/zhuc-boy/electron_one#readme",
+    "devDependencies": {
+        "electron": "^9.0.5"
+    }
+}
