@@ -17,6 +17,8 @@
     },
     "homepage": "https://github.com/zhuc-boy/electron_one#readme",
     "devDependencies": {
-        "electron": "^9.0.5"
+        "electron": "^9.0.5",
+        "pump": "^3.0.0",
+        "compressing": "^1.5.1"
     }
 }

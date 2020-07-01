@@ -1,5 +1,4 @@
 const { app, BrowserWindow } = require("electron")
-const { ipcMain } = require('electron')
 function createWindow() {
     let win = new BrowserWindow({
         width: 400,
@@ -13,8 +12,26 @@ function createWindow() {
     win.show()
     win.loadFile("./src/page/index.html")
     win.webContents.openDevTools()
-
+    const { Notification } = require("electron")
+    if (Notification.isSupported() === true) {
+        let notice = new Notification({
+            title: "title",
+            subtitle: "subtitle",
+            body: "body",
+            replyPlaceholder: "replyPlaceholder",
+            closeButtonText: "closeButtonText",
+            hasReply: true,
+            replyPlaceholder: "replyPlaceholder"
+        })
+        notice.show()
+        notice.on("reply", (event, reply) => {
+            console.log(reply)
+            win.setProgressBar(0.7)
+        })
+    }
+    win.setProgressBar(0)
 }
+// const { globalShortcut } = require("electron")
 app.whenReady().then(() => {
     createWindow()
     app.on("activate", () => {
@@ -22,15 +39,49 @@ app.whenReady().then(() => {
             createWindow()
         }
     })
+    // globalShortcut.register('CommandOrControl+X', () => {
+    //     console.log('CommandOrControl+X is pressed')
+    // })
+
 })
 app.on("window-all-closed", () => {
     if (process.platform !== "darwin") {
         app.quit()
     }
 })
-
+const { ipcMain } = require('electron')
 ipcMain.on("input", (event, data) => {
     console.log(data)
-    event.reply("getinput", data)
+    event.reply("getinputtwo", data)
     // document.getElementById("huoqu").innerText = data
 })
+const { Menu, MenuItem } = require("electron")
+// const dockMenu = Menu.buildFromTemplate([
+//     {
+//         label: 'New Window',
+//         click() { console.log('New Window') }
+//     }, {
+//         label: 'New Window with Settings',
+//         submenu: [
+//             { label: 'Basic' },
+//             { label: 'Pro' }
+//         ]
+//     },
+//     { label: 'New Command...' }
+// ])
+const menu = new Menu()
+
+menu.append(new MenuItem({
+    label: 'Print',
+    accelerator: process.platform === 'darwin' ? 'Alt+Cmd+I' : 'Ctrl+Shift+I',
+    click: () => { console.log('time to print stuff') }
+}))
+app.on('browser-window-created', function (event, win) {
+    win.webContents.on('context-menu', function (e, params) {
+        menu.popup(win, params.x, params.y)
+    })
+})
+
+
+// app.dock.setMenu(dockMenu)
+console.log(app.getAppPath())

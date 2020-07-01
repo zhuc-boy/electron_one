@@ -11,12 +11,45 @@
             width: 100px;
             height: 30px;
         }
+
+        .fileBox .fileEle {
+            display: flex;
+            width: 100%;
+            height: 40px;
+            align-items: center;
+            animation: loading 3s 1
+        }
+
+        @keyframes loading {
+            0% {
+                width: 0%
+            }
+
+            100% {
+                width: 100%;
+            }
+        }
+
+        .fileBox .fileEle:nth-child(odd) {
+            background-color: rgb(220, 228, 235);
+        }
+
+        .fileBox .fileEle:nth-child(even) {
+            background-color: rgb(176, 194, 209);
+        }
+
+        .fileBox .fileEle:hover {
+            background-color: rgb(201, 204, 178);
+        }
     </style>
 </head>
 
 <body>
-    <input type="button" name="名字" id="name">
+    <input type="button" name="名字" id="name" onclick="showDialog()">
     <div id="huoqu"></div>
+    <div class="fileBox">
+
+    </div>
 </body>
 <script src="../js/ceshi.js"></script>
 
