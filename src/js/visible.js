@@ -19,6 +19,7 @@ function handleError(e) {
 window.onload = function () {
     const { BrowserWindow } = remote
     document.getElementById("xinjiemian").addEventListener("click", () => {
+        const windowId = BrowserWindow.getFocusedWindow().id
         let win = new BrowserWindow({
             width: 400,
             height: 300,
@@ -28,9 +29,13 @@ window.onload = function () {
                 nodeIntegration: true,
             }
         })
-        win.show()
         win.loadFile("./src/page/ceshi.html")
+        win.show()
         win.webContents.openDevTools()
+        document.getElementById("xinjiemian").style.display = "none"
+        win.on("close", () => {
+            document.getElementById("xinjiemian").style.display = "block"
+        })
     })
     document.getElementById("xinjiemian2").addEventListener("click", () => {
         let win = new BrowserWindow({
@@ -56,8 +61,12 @@ window.onload = function () {
                 nodeIntegration: true,
             }
         })
-        win.show()
         win.loadFile("./src/page/tool.html")
+        win.show()
+        document.getElementById("xinjiemian3").style.display = "none"
+        win.on("close", () => {
+            document.getElementById("xinjiemian3").style.display = "block"
+        })
         win.webContents.openDevTools()
     })
     ipcRenderer.on("getinput", (event, data) => {

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/main.css">
     <title>子一窗口</title>
     <style>
         #name {
@@ -12,21 +13,35 @@
             height: 30px;
         }
 
+        .fileBox {
+            /* padding: 10px; */
+        }
+
         .fileBox .fileEle {
             display: flex;
-            width: 100%;
+            width: 0%;
             height: 40px;
             align-items: center;
-            animation: loading 3s 1
+            animation: loading 1s 1 forwards;
+            opacity: 0;
+            overflow: hidden;
+            white-space: nowrap;
         }
 
         @keyframes loading {
             0% {
-                width: 0%
+                width: 0%;
+                opacity: 0;
             }
+
+            /* 50% {
+                width: 30%;
+                opacity: 0.2;
+            } */
 
             100% {
                 width: 100%;
+                opacity: 1;
             }
         }
 
@@ -39,13 +54,67 @@
         }
 
         .fileBox .fileEle:hover {
-            background-color: rgb(201, 204, 178);
+            background-color: rgb(230, 240, 239);
+        }
+
+        /* .fileBox .fileEle .filename {
+            flex-grow: 1;
+        } */
+
+        .fileBox .fileEle .foldertype {
+            padding-left: 30px;
+            position: relative;
+            width: 100%;
+            line-height: 40px;
+        }
+
+        .fileBox .fileEle .filetype {
+            padding-left: 30px;
+            position: relative;
+            width: 100%;
+            line-height: 40px;
+        }
+
+        .fileBox .fileEle .filetype::after {
+            content: "";
+            position: absolute;
+            /* flex-grow: 0; */
+            height: 20px;
+            width: 20px;
+            background-image: url(../image/file.svg);
+            background-size: contain;
+            left: 0;
+            top: 10px;
+        }
+
+        .fileBox .fileEle .foldertype::after {
+            content: "";
+            position: absolute;
+            /* flex-grow: 0; */
+            height: 20px;
+            width: 20px;
+            background-image: url(../image/folder.svg);
+            background-size: contain;
+            left: 0;
+            top: 10px;
+        }
+
+        .toolpart {
+            display: flex;
+
         }
     </style>
 </head>
 
 <body>
-    <input type="button" name="名字" id="name" onclick="showDialog()">
+    <div class="toolpart">
+        <button onclick="showDialog()">选择文件夹</button>
+        <!-- <input type="button" name="名字" id="name" onclick="showDialog()"> -->
+        <button onclick="backFile()">后退</button>
+        <a id="close" href="javascript:window.close()">关闭此窗体</a>
+        <button id="context-menu"></button>
+    </div>
+    <code path="../js/ceshi.js"></code>
     <div id="huoqu"></div>
     <div class="fileBox">
 
