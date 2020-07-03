@@ -1,5 +1,6 @@
 const { app, BrowserWindow } = require("electron")
 function createWindow() {
+    // console.log(BrowserWindow.getFocusedWindow().id)
     let win = new BrowserWindow({
         width: 400,
         height: 600,
@@ -90,5 +91,37 @@ ipcMain.on('show-context-menu', (event) => {
     const win = BrowserWindow.fromWebContents(event.sender)
     menu.popup(win)
 })
+ipcMain.on("yibu", (event, arg) => {
+    event.sender.send("asyncMsg", "已获得异步消息")
+})
+ipcMain.on("tongbu", (event, arg) => {
+    event.returnValue = "已获得同步消息"
+})
+let RenderIdARR = []
+// item={
+//     id:Number,
+//     des:String
+// }
+ipcMain.on("createRender", (e, arg) => {
+    RenderIdARR.push({
+        id: arg.id,
+        des: arg.des
+    })
+    if (RenderIdARR[0].id) {
+        let Br = BrowserWindow.fromId(RenderIdARR[0].id)
+        Br.webContents.send("activeId", RenderIdARR)
+    }
+    console.log(RenderIdARR)
+})
+ipcMain.on("destroyRender", (e, arg) => {
+    debugger
+    RenderIdARR.map((d, i) => {
+        if (arg.id === d.id) {
+            RenderIdARR.splice(i, 1)
+        }
+    })
+    console.log(RenderIdARR)
+})
 // app.dock.setMenu(dockMenu)
-console.log(app.getAppPath())
+// console.log(app.getAppPath())
+console.log(RenderIdARR)

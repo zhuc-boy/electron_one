@@ -1,9 +1,4 @@
 const { remote, ipcRenderer } = require('electron')
-const fs = require("fs")
-const zlib = require("zlib")
-const pump = require('pump');
-const compressing = require("compressing")
-
 const updateOnlineStatus = () => {
     ipcRenderer.send('online-status-changed', navigator.onLine ? 'online' : 'offline')
 }
@@ -19,7 +14,6 @@ function handleError(e) {
 window.onload = function () {
     const { BrowserWindow } = remote
     document.getElementById("xinjiemian").addEventListener("click", () => {
-        const windowId = BrowserWindow.getFocusedWindow().id
         let win = new BrowserWindow({
             width: 400,
             height: 300,
@@ -29,27 +23,40 @@ window.onload = function () {
                 nodeIntegration: true,
             }
         })
+        win.webContents.on("did-finish-load", () => {
+            document.getElementById("xinjiemian").style.display = "none"
+            ipcRenderer.send("createRender", { id: win.id })
+        })
         win.loadFile("./src/page/ceshi.html")
         win.show()
         win.webContents.openDevTools()
-        document.getElementById("xinjiemian").style.display = "none"
         win.on("close", () => {
+            ipcRenderer.send("destroyRender", { id: win.id })
             document.getElementById("xinjiemian").style.display = "block"
         })
+        // win.webContents.on("did-finish-load")
     })
     document.getElementById("xinjiemian2").addEventListener("click", () => {
         let win = new BrowserWindow({
             width: 400,
             height: 300,
             webPreferences: {
-                nodeIntegration: false,
+                nodeIntegration: true,
                 // 关闭可以在渲染环境中禁止require和module
             }
         })
+        win.webContents.on("did-finish-load", () => {
+            document.getElementById("xinjiemian2").style.display = "none"
+            ipcRenderer.send("createRender", { id: win.id })
+        })
         win.show()
-        win.loadURL("https://www.szsyxh.org.cn/front/yxjj-wx/?code=011Ot4HK0Aq43c2ZQ5JK00S1HK0Ot4Hi&state=STATE#/livemeeting?id=303")
-        // win.loadFile("./src/page/test.html")
+        // win.loadURL("https://www.szsyxh.org.cn/front/yxjj-wx/?code=011Ot4HK0Aq43c2ZQ5JK00S1HK0Ot4Hi&state=STATE#/livemeeting?id=303")
+        win.loadFile("./src/page/test.html")
         win.webContents.openDevTools()
+        win.on("close", () => {
+            ipcRenderer.send("destroyRender", { id: win.id })
+            document.getElementById("xinjiemian2").style.display = "block"
+        })
     })
     document.getElementById("xinjiemian3").addEventListener("click", () => {
         let win = new BrowserWindow({
@@ -61,11 +68,37 @@ window.onload = function () {
                 nodeIntegration: true,
             }
         })
+        win.webContents.on("did-finish-load", () => {
+            document.getElementById("xinjiemian3").style.display = "none"
+            ipcRenderer.send("createRender", { id: win.id })
+        })
         win.loadFile("./src/page/tool.html")
         win.show()
-        document.getElementById("xinjiemian3").style.display = "none"
         win.on("close", () => {
+            ipcRenderer.send("destroyRender", { id: win.id })
             document.getElementById("xinjiemian3").style.display = "block"
+        })
+        win.webContents.openDevTools()
+    })
+    document.getElementById("xinjiemian4").addEventListener("click", () => {
+        let win = new BrowserWindow({
+            width: 400,
+            height: 400,
+            // transparent: true,
+            // titleBarStyle: 'hiddenInset',
+            webPreferences: {
+                nodeIntegration: true,
+            }
+        })
+        win.loadFile("./src/page/msg.html")
+        win.show()
+        win.webContents.on("did-finish-load", () => {
+            document.getElementById("xinjiemian4").style.display = "none"
+            ipcRenderer.send("createRender", { id: win.id })
+        })
+        win.on("close", () => {
+            ipcRenderer.send("destroyRender", { id: win.id })
+            document.getElementById("xinjiemian4").style.display = "block"
         })
         win.webContents.openDevTools()
     })
@@ -76,6 +109,5 @@ window.onload = function () {
         var b = document.getElementById(name).parentNode.children
         console.log(b)
     }
-
 }
 
