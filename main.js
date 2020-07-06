@@ -13,6 +13,7 @@ function createWindow() {
     win.show()
     win.loadFile("./src/page/index.html")
     win.webContents.openDevTools()
+    require("electron-webbt-dialog")(win)
     const { Notification } = require("electron")
     if (Notification.isSupported() === true) {
         let notice = new Notification({
@@ -32,6 +33,7 @@ function createWindow() {
     }
     win.setProgressBar(0)
 }
+app.commandLine.appendSwitch('enable-experimental-web-platform-features', true)
 // const { globalShortcut } = require("electron")
 app.whenReady().then(() => {
     createWindow()
@@ -113,8 +115,8 @@ ipcMain.on("createRender", (e, arg) => {
         let Br = BrowserWindow.fromId(RenderIdARR[0].id)
         Br.webContents.send("activeId", RenderIdARR)
     }
-    console.log("create render progress")
-    console.log(RenderIdARR)
+    // console.log("create render progress")
+    // console.log(RenderIdARR)
 })
 ipcMain.on("DR", (e, arg) => {
     RenderIdARR.map((d, i) => {
@@ -122,9 +124,10 @@ ipcMain.on("DR", (e, arg) => {
             RenderIdARR.splice(i, 1)
         }
     })
-    console.log("destory render progress")
-    console.log(RenderIdARR)
+    // console.log("destory render progress")
+    // console.log(RenderIdARR)
 })
 // app.dock.setMenu(dockMenu)
 // console.log(app.getAppPath())
 // console.log(RenderIdARR)
+// require("/electron-webbt-dialog")(mainWindow);

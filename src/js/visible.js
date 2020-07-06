@@ -19,6 +19,7 @@ window.onload = function () {
             height: 300,
             // transparent: true,
             // titleBarStyle: 'hiddenInset',
+
             webPreferences: {
                 nodeIntegration: true,
             }
@@ -37,7 +38,18 @@ window.onload = function () {
             ipcRenderer.send("DR", { id: id })
             document.getElementById("xinjiemian").style.display = "block"
         })
-        // win.webContents.on("did-finish-load")
+        win.webContents.on('select-bluetooth-device', (event, deviceList, callback) => {
+            event.preventDefault()
+            let result = deviceList.find((device) => {
+                return device.deviceName === 'test'
+            })
+            if (!result) {
+                callback('')
+            } else {
+                callback(result.deviceId)
+            }
+        })
+        require("electron-webbt-dialog")(win)
     })
     document.getElementById("xinjiemian2").addEventListener("click", () => {
         let win = new BrowserWindow({

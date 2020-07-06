@@ -128,3 +128,25 @@ ipcRenderer.on("activeId", (e, d) => {
 contextMenuBtn.addEventListener('click', () => {
     ipcRenderer.send('show-context-menu')
 })
+async function OpenblueTooch() {
+    let options = {
+        // filters: [
+        //     { services: ['heart_rate'] },
+        //     { services: [0x1802, 0x1803] },
+        //     { services: ['c48e6067-5295-48d3-8d5c-0395f61792b1'] },
+        //     { name: '设备名' },
+        //     { namePrefix: '前缀' }
+        // ],
+        // optionalServices: ['battery_service'],
+        acceptAllDevices: true
+    }
+    // let bluetooth = await
+    try {
+        let device = await navigator.bluetooth.requestDevice(options)
+        console.log(`device :${device}`)
+    } catch (error) {
+        console.log(error)
+    }
+
+    // navigator.bluetooth.getDevices();
+}

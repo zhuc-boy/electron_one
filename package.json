@@ -19,6 +19,7 @@
     "devDependencies": {
         "electron": "^9.0.5",
         "pump": "^3.0.0",
-        "compressing": "^1.5.1"
+        "compressing": "^1.5.1",
+        "electron-webbt-dialog": "^0.1.0"
     }
 }
