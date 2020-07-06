@@ -49,7 +49,6 @@ window.onload = function () {
                 callback(result.deviceId)
             }
         })
-        require("electron-webbt-dialog")(win)
     })
     document.getElementById("xinjiemian2").addEventListener("click", () => {
         let win = new BrowserWindow({

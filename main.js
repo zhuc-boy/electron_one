@@ -13,7 +13,6 @@ function createWindow() {
     win.show()
     win.loadFile("./src/page/index.html")
     win.webContents.openDevTools()
-    require("electron-webbt-dialog")(win)
     const { Notification } = require("electron")
     if (Notification.isSupported() === true) {
         let notice = new Notification({
