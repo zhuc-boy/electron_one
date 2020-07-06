@@ -23,15 +23,18 @@ window.onload = function () {
                 nodeIntegration: true,
             }
         })
+        let id
         win.webContents.on("did-finish-load", () => {
             document.getElementById("xinjiemian").style.display = "none"
+            id = win.id
             ipcRenderer.send("createRender", { id: win.id })
         })
         win.loadFile("./src/page/ceshi.html")
         win.show()
         win.webContents.openDevTools()
         win.on("close", () => {
-            ipcRenderer.send("destroyRender", { id: win.id })
+            // ipcRenderer.sendSync("tongbu", { id: id })
+            ipcRenderer.send("DR", { id: id })
             document.getElementById("xinjiemian").style.display = "block"
         })
         // win.webContents.on("did-finish-load")
@@ -45,16 +48,19 @@ window.onload = function () {
                 // 关闭可以在渲染环境中禁止require和module
             }
         })
+        let id
         win.webContents.on("did-finish-load", () => {
             document.getElementById("xinjiemian2").style.display = "none"
+            id = win.id
             ipcRenderer.send("createRender", { id: win.id })
+
         })
         win.show()
         // win.loadURL("https://www.szsyxh.org.cn/front/yxjj-wx/?code=011Ot4HK0Aq43c2ZQ5JK00S1HK0Ot4Hi&state=STATE#/livemeeting?id=303")
         win.loadFile("./src/page/test.html")
         win.webContents.openDevTools()
         win.on("close", () => {
-            ipcRenderer.send("destroyRender", { id: win.id })
+            ipcRenderer.send("DR", { id: id })
             document.getElementById("xinjiemian2").style.display = "block"
         })
     })
@@ -68,14 +74,16 @@ window.onload = function () {
                 nodeIntegration: true,
             }
         })
+        let id
         win.webContents.on("did-finish-load", () => {
             document.getElementById("xinjiemian3").style.display = "none"
+            id = win.id
             ipcRenderer.send("createRender", { id: win.id })
         })
         win.loadFile("./src/page/tool.html")
         win.show()
         win.on("close", () => {
-            ipcRenderer.send("destroyRender", { id: win.id })
+            ipcRenderer.send("DR", { id: id })
             document.getElementById("xinjiemian3").style.display = "block"
         })
         win.webContents.openDevTools()
@@ -90,14 +98,17 @@ window.onload = function () {
                 nodeIntegration: true,
             }
         })
+        let id
         win.loadFile("./src/page/msg.html")
         win.show()
         win.webContents.on("did-finish-load", () => {
             document.getElementById("xinjiemian4").style.display = "none"
+            id = win.id
             ipcRenderer.send("createRender", { id: win.id })
+
         })
         win.on("close", () => {
-            ipcRenderer.send("destroyRender", { id: win.id })
+            ipcRenderer.send("DR", { id: id })
             document.getElementById("xinjiemian4").style.display = "block"
         })
         win.webContents.openDevTools()

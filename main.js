@@ -95,6 +95,8 @@ ipcMain.on("yibu", (event, arg) => {
     event.sender.send("asyncMsg", "已获得异步消息")
 })
 ipcMain.on("tongbu", (event, arg) => {
+    console.log("同步信息：")
+    console.log(arg)
     event.returnValue = "已获得同步消息"
 })
 let RenderIdARR = []
@@ -111,17 +113,18 @@ ipcMain.on("createRender", (e, arg) => {
         let Br = BrowserWindow.fromId(RenderIdARR[0].id)
         Br.webContents.send("activeId", RenderIdARR)
     }
+    console.log("create render progress")
     console.log(RenderIdARR)
 })
-ipcMain.on("destroyRender", (e, arg) => {
-    debugger
+ipcMain.on("DR", (e, arg) => {
     RenderIdARR.map((d, i) => {
         if (arg.id === d.id) {
             RenderIdARR.splice(i, 1)
         }
     })
+    console.log("destory render progress")
     console.log(RenderIdARR)
 })
 // app.dock.setMenu(dockMenu)
 // console.log(app.getAppPath())
-console.log(RenderIdARR)
+// console.log(RenderIdARR)
