@@ -1,0 +1,63 @@
+TS操作
+1、为了能够生成类似于package.json这种配置文件，在TS项目中，我们是可以使用tsc —init，生成tsconfig.json。
+生成的compilerOptions的配置项：https://www.cnblogs.com/cczlovexw/p/11527708.html
+https://www.tslang.cn/docs/handbook/tsconfig-json.html 官方文档
+2、运行方式：tsc -w    w的意思是watch
+
+TS基础类型 1、布尔值
+	let isDone:boolean = false
+2、数字
+	let shi:number = 6
+	let shiliu:number = 0xf00d
+	let er:number = 0b1010
+	let ba:number = 0o744
+	使用es5模式编译时，二进制和八进制会自动转换成10进		制
+3、字符串
+	let name:string = ‘bob’
+	ts支持使用模板字符串
+	let age:number = 1;
+	let sente:string = `hello ,my name is ${name}, I am $		{age} years old`
+4、数组
+	let list:number[] = [1,2,3]
+	let list:Array<number>=[1,2,3]
+5、元组
+	let x:[string,number];
+	x=[‘a’,1];//ok
+	x=[10,’a’];//error
+6、枚举
+	enum Color{red,green,blue} 	let c:Color=Color.green
+7、Any
+	let notSure:any = 4
+	notSure=‘OK’
+	notSure=false
+8、void
+	function war():void{
+		console.log(abc)
+	}
+	申明为void类型的变量，只能赋值undefined或者null
+	let unusable:void=undefined
+9、null
+	表示对象值缺失
+10、undefined
+	用于初始化变量为一个未定义的值
+11、never
+	never是其他类型(包括null和undefined)的子类型，代表从	不会出现的值
+类型断言
+	<类型>值,或者 值 as 类型
+	let str:string=‘1’
+	let str2:number=<number><any>str
+	console.log(str2)
+	这边断言了两次，因为number、string都是any的子集，		所以先要把str断言成any型，这边如果偷懒的话也可以结		束了，为了代码的逻辑性更好，再将<any>str断言成		number类型，及<number><any>str
+	!!正确的断言是可以父子集互转，所以上面的语句也可以这	样写:
+	let str2:number=<number><never>str,因为never			是所有类型的子集，子集-><-父集
+函数
+	参考es6,有参数的解析，参数的默认值，箭头函数
+	
+联合类型
+	type1 | type2 |type3
+
+
+命名空间及模块
+	命名空间：namespace，在ts早期版本中被称为内部模块。
+	模块 import XX from ‘’或者import XX=require(‘’)，ts早期版本中称之为外部模块。
+	引用文件///<reference path=‘’>
