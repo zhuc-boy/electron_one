@@ -1,4 +1,8 @@
-const { app, BrowserWindow } = require("electron")
+const {
+    app,
+    BrowserWindow
+} = require("electron")
+
 function createWindow() {
     // console.log(BrowserWindow.getFocusedWindow().id)
     let win = new BrowserWindow({
@@ -13,7 +17,9 @@ function createWindow() {
     win.show()
     win.loadFile("./src/page/index.html")
     win.webContents.openDevTools()
-    const { Notification } = require("electron")
+    const {
+        Notification
+    } = require("electron")
     if (Notification.isSupported() === true) {
         let notice = new Notification({
             title: "title",
@@ -51,13 +57,18 @@ app.on("window-all-closed", () => {
         app.quit()
     }
 })
-const { ipcMain } = require('electron')
+const {
+    ipcMain
+} = require('electron')
 ipcMain.on("input", (event, data) => {
     console.log(data)
     event.reply("getinputtwo", data)
     // document.getElementById("huoqu").innerText = data
 })
-const { Menu, MenuItem } = require("electron")
+const {
+    Menu,
+    MenuItem
+} = require("electron")
 // const dockMenu = Menu.buildFromTemplate([
 //     {
 //         label: 'New Window',
@@ -76,7 +87,9 @@ const menu = new Menu()
 menu.append(new MenuItem({
     label: 'Print',
     accelerator: process.platform === 'darwin' ? 'Alt+Cmd+I' : 'Ctrl+Shift+I',
-    click: () => { console.log('time to print stuff') }
+    click: () => {
+        console.log('time to print stuff')
+    }
 }))
 app.on('browser-window-created', function (event, win) {
     win.webContents.on('context-menu', function (e, params) {
@@ -130,3 +143,16 @@ ipcMain.on("DR", (e, arg) => {
 // console.log(app.getAppPath())
 // console.log(RenderIdARR)
 // require("/electron-webbt-dialog")(mainWindow);
+const path = require("path")
+const appFolder = path.dirname(process.execPath)
+const updateExe = path.resolve(appFolder, '..', 'fukaiitapp.exe')
+const exeName = path.basename(process.execPath)
+
+app.setLoginItemSettings({
+    openAtLogin: true,
+    path: updateExe,
+    args: [
+        '--processStart', `"${exeName}"`,
+        '--process-start-args', `"--hidden"`
+    ]
+})

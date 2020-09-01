@@ -4,7 +4,8 @@
     "description": "第一个electron程序",
     "main": "main.js",
     "scripts": {
-        "start": "electron ."
+        "start": "electron .",
+        "packager": "electron-packager . fukaiitapp --out fukaiitapp --arch=x64 --overwrite --ignore=node_modules"
     },
     "repository": {
         "type": "git",
@@ -17,9 +18,10 @@
     },
     "homepage": "https://github.com/zhuc-boy/electron_one#readme",
     "devDependencies": {
-        "electron": "^9.0.5",
+        "electron": "^v9.2.1",
         "pump": "^3.0.0",
         "compressing": "^1.5.1",
-        "electron-webbt-dialog": "^0.1.0"
+        "electron-webbt-dialog": "^0.1.0",
+        "electron-packager": "^15.1.0"
     }
 }
